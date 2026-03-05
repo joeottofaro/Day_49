@@ -23,7 +23,6 @@ chrome_options.add_argument(f"--user-data-dir={user_data_dir}")
 driver = webdriver.Chrome(options=chrome_options)
 driver.get(GYM_URL)
 
-
 # ---------------- Automated Login ----------------
 def login():
     login_button = WebDriverWait(driver, 5).until(
@@ -44,14 +43,13 @@ def login():
 
 
 @retry(
-    stop=stop_after_attempt(7),
+    stop=stop_after_attempt(17),
     wait=wait_fixed(2),
     retry=retry_if_exception_type(TimeoutException),
     reraise=True
 )
 def retry_login():
     login()
-
     WebDriverWait(driver, 5).until(
         EC.presence_of_element_located(
             (By.CLASS_NAME, "Schedule_scheduleTitle__zfZxg")
